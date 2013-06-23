@@ -1,0 +1,6 @@
+{
+  "system": {
+    "upgrade_packages":false
+  },
+  "run_list":["system", "system::upgrade_packages", "plexapp"]
+}

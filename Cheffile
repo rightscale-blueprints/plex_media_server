@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+site 'http://community.opscode.com/api/v1'
+
+cookbook 'plexapp',
+    :git => 'https://github.com/jtimberman/plexapp-cookbook.git',
+    :ref => 'master'
+
+cookbook 'system',
+    :git => 'https://github.com/flaccid/cookbooks.git',
+    :path => 'cookbooks/system',
+    :ref => 'master'
+
+# ensure the apt cookbook version if compatible with Chef ~= 10
+cookbook 'apt',
+    :git => 'https://github.com/opscode-cookbooks/apt.git',
+    :ref => '1.10.0'

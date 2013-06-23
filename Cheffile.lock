@@ -1,0 +1,34 @@
+SITE
+  remote: http://community.opscode.com/api/v1
+  specs:
+    cron (1.2.4)
+
+GIT
+  remote: https://github.com/flaccid/cookbooks.git
+  path: cookbooks/system
+  ref: master
+  sha: 720d70b1b0a2cc36e487d13f69dc19d7fe6eada4
+  specs:
+    system (0.0.1)
+      cron (>= 0.0.0)
+
+GIT
+  remote: https://github.com/jtimberman/plexapp-cookbook.git
+  ref: master
+  sha: 07529732f0e722eed9e58c67b6706933f7091284
+  specs:
+    plexapp (0.1.0)
+      apt (>= 0.0.0)
+
+GIT
+  remote: https://github.com/opscode-cookbooks/apt.git
+  ref: 1.10.0
+  sha: d4b5912cd8f3e73a417b3b176fb85e37b04993fa
+  specs:
+    apt (1.10.0)
+
+DEPENDENCIES
+  apt (>= 0)
+  plexapp (>= 0)
+  system (>= 0)
+
