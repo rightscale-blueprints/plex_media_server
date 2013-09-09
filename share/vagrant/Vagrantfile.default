@@ -1,0 +1,63 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "plex_media_server"
+
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  # set this to the IP address of your LAN's router, comment out if not using public_network/bridged
+  default_route = "192.168.0.1"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  # config.vm.provider :virtualbox do |vb|
+  #   # Don't boot with headless mode
+  #   vb.gui = true
+  #
+  #   # Use VBoxManage to customize the VM. For example to change memory:
+  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
+  # end
+  #
+  # View the documentation for the provider you're using for more
+  # information on available options.
+  #config.vm.provider :virtualbox do |vb|
+  #  vb.customize ["modifyvm", :id, "--cpus", 4]
+  #  vb.customize ["modifyvm", :id, "--memory", "8192"]
+  #end
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  #config.vm.network :public_network
+  config.vm.network :public_network, ip: "192.168.0.50"     # with static IP, useful for server sharing
+  
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  #config.vm.network :private_network, ip: "192.168.33.10"
+
+  # change/ensure the default route via the local network's WAN router
+  config.vm.provision :shell, :inline => "ip route delete default 2>&1 >/dev/null || true; ip route add default via #{default_route}"
+
+  # share the host's /media to the guest for sections
+  config.vm.synced_folder "/media", "/media/host"
+  
+  # add the plex user to the vagrant group for better access to the media
+  config.vm.provision :shell, :inline => "usermod -a -G vagrant plex"
+  
+  # upgrade chef to latest known 0.10
+  config.vm.provision :shell, :inline => 'gem list | grep chef | grep 10.26.0 || gem install chef -v 10.26.0 --no-rdoc --no-ri'
+
+  # provisioning with chef solo
+  config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = 'cookbooks'
+      chef.json.merge!(JSON.parse(File.read('node.json')))
+      chef.run_list = JSON.parse(File.read('node.json'))['run_list']
+      #chef.run_list = []
+      chef.log_level = :debug
+  end
+end

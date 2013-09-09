@@ -1,0 +1,8 @@
+{
+ "system": {
+    "short_hostname":"plexmediaserver",
+    "domain_name":"localdomain",
+    "upgrade_packages":true
+  },
+  "run_list":["system", "system::upgrade_packages", "plexapp"]
+}
