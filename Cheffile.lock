@@ -13,9 +13,9 @@ GIT
       cron (>= 0.0.0)
 
 GIT
-  remote: https://github.com/jtimberman/plexapp-cookbook.git
+  remote: https://github.com/flaccid/plexapp-cookbook.git
   ref: master
-  sha: 07529732f0e722eed9e58c67b6706933f7091284
+  sha: 37983a43c49fde3f5c86b095a35e80fda39f059c
   specs:
     plexapp (0.1.0)
       apt (>= 0.0.0)

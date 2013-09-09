@@ -3,9 +3,13 @@
 
 site 'http://community.opscode.com/api/v1'
 
+# use flaccid's fork until https://github.com/jtimberman/plexapp-cookbook/pull/4 is processed
 cookbook 'plexapp',
-    :git => 'https://github.com/jtimberman/plexapp-cookbook.git',
+    :git => 'https://github.com/flaccid/plexapp-cookbook.git',
     :ref => 'master'
+#cookbook 'plexapp',
+#    :git => 'https://github.com/jtimberman/plexapp-cookbook.git',
+#    :ref => 'master'
 
 cookbook 'system',
     :git => 'https://github.com/flaccid/cookbooks.git',
